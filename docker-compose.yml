@@ -1,0 +1,22 @@
+version: "3"
+services:
+  nginx:
+    container_name: webserver
+    build: ./.docker/nginx
+    volumes:
+      - ./public:/usr/share/nginx/html
+    ports:
+      - 80:80
+  node:
+    container_name: node
+    build:
+      context: ./.docker/node
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./webpack.mix.js:/app/webpack.mix.js
+    ports:
+      - 2000:2000
+    tty: true
